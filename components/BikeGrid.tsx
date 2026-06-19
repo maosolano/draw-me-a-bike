@@ -47,12 +47,14 @@ export default function BikeGrid({ images }: { images: string[] }) {
 
   const buildDeck = (): Card[] => shuffle([...SPECIAL_CARDS, ...imageCards])
 
-  const [cards, setCards] = useState<Card[]>(() => buildDeck())
+  const [cards, setCards] = useState<Card[]>(() => [...SPECIAL_CARDS, ...imageCards])
   const [visible, setVisible] = useState(true)
   const [selected, setSelected] = useState<{ src: string; meta: BikeMetadata } | null>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
+    setCards(buildDeck())
+
     const cycle = () => {
       setVisible(false)
       timerRef.current = setTimeout(() => {
